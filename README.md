@@ -43,3 +43,24 @@ Nesse primeiro commit do projeto, apenas o cadastro de clientes está “complet
 
 O primeiro passo para rodar a aplicação é baixar as imagens e rodar os containers descritos acima.
 Na pasta Scripts do projeto `ThinkerThings.Customers.Service.Api` contem os arquivos para criação das tabelas de clientes.
+
+## Fontes de referência
+https://www.twitch.tv/phatboyg
+
+Canal do Twitch do criador do Masstransit
+
+https://jimmybogard.com/
+
+Criador dos pacotes MediatR e AutoMapper além de ótimas apresensetações no NDC.
+
+https://www.stevejgordon.co.uk/
+
+Blog voltado a performance de aplicações Asp Net Core
+
+https://dotnet.microsoft.com/learn/dotnet/architecture-guides
+
+Ótimos exemplos de como criar a realizar deploy de aplicação com docker e desenvolvimento de microsserviços
+
+https://d0.awsstatic.com/whitepapers/performance-at-scale-with-amazon-elasticache.pdf
+
+Documetanção da Amazon para uso de estratégias de cache:
