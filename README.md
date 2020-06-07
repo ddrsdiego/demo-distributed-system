@@ -63,4 +63,8 @@ https://dotnet.microsoft.com/learn/dotnet/architecture-guides
 
 https://d0.awsstatic.com/whitepapers/performance-at-scale-with-amazon-elasticache.pdf
 
-Documetanção da Amazon para uso de estratégias de cache:
+Documetanção da Amazon para uso de estratégias de cache
+
+https://github.com/microsoft/api-guidelines/blob/vNext/Guidelines.md#3-introduction
+
+Guidelines para criação de aplicações REST.
