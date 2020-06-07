@@ -16,6 +16,7 @@ Para o mecanismo de cache, foi utilizado Memcached
 
 ## Packages
 As aplicaçções fazem uso dos seguintes packages
+
 https://www.nuget.org/packages/EnyimMemcachedCore/
 https://www.nuget.org/packages/MySqlConnector/
 https://www.nuget.org/packages/MassTransit.AspNetCore/
