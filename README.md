@@ -15,7 +15,7 @@ Para o mecanismo de cache, foi utilizado Memcached
 `docker run -p 11211:11211 -d memcached`
 
 ## Packages
-As aplicaçções fazem uso dos seguintes packages
+As aplicações fazem uso dos seguintes packages
 
 https://www.nuget.org/packages/EnyimMemcachedCore/
 https://www.nuget.org/packages/MySqlConnector/
