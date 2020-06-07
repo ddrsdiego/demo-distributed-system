@@ -1,30 +1,34 @@
 # Demo Distributed System
 
-Esse projeto tem o intuito de demonstrar sistemas distribidos 
+Esse projeto tem o intuito de demonstrar como sistemas distribidos podem transmitir mensagens entre si
 
-## O que é o Memcached
-O Memcached é um banco de dados chave e valor de código aberto e alto desempenho, de memória distribuída, destinado a acelerar aplicações Web, aliviando a carga do banco de dados.
-
-Para mais informações consultar o site: https://memcached.org/
-
-## Docker
+## Imagens Docker
 Para o exemplo foram usadas as seguintes imagens:
 
+Para o banco de dados, foi utilizado o MariaDB
 `docker run --name mariadb -e MYSQL_ROOT_PASSWORD=SUA_SENHA -d -p 3306:3306 mariadb`
 
+Para o mecanismo de transporte de mensagens, foi utilizad o RabbitMQ.
 `docker run --name rabbitmq -d -p 5672:5672 -p 15672:15672 --hostname rabbitmq rabbitmq:3-management`
 
+Para o mecanismo de cache, foi utilizado Memcached
 `docker run -p 11211:11211 -d memcached`
 
 ## Packages
-A aplicação faz uso do NuGet package `EnyimMemcachedCore`
+As aplicaÃ§Ã§Ãµes fazem uso dos seguintes packages
 https://www.nuget.org/packages/EnyimMemcachedCore/
+https://www.nuget.org/packages/MySqlConnector/
+https://www.nuget.org/packages/MassTransit.AspNetCore/
+https://www.nuget.org/packages/MassTransit.RabbitMQ/
+https://www.nuget.org/packages/MassTransit.Extensions.DependencyInjection/
 
-
-### Rodar a aplicação
+### Rodar as aplicaÃ§Ã£os
 
 **WARNING**
-Caso não seja definido a configuração abaixo no appSettings, a aplicação irá ser configurada para rodar localmente.
+Nesse primeiro momento a aplicaÃ§Ã£o que faz uso persistencia dados Ã© `ThinkerThings.Customers.Service.Api`.
+Os prÃ³ximos passos desse repositÃ³rio serÃ¡ implementar a persistencia dos dados recebidos no `ThinkerThings.Orders.Service.Api` e utilizando algum banco de dados NoSQL.
+
+
 
 ```json
   "MemcachedSettings": {
