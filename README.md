@@ -55,7 +55,7 @@ Criador dos pacotes MediatR e AutoMapper além de ótimas apresensetações no N
 
 https://www.stevejgordon.co.uk/
 
-Blog voltado a performance de aplicações Asp Net Core
+Blog voltado a performance de aplicações ASP.NET Core
 
 https://dotnet.microsoft.com/learn/dotnet/architecture-guides
 
