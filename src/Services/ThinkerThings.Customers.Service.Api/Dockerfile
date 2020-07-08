@@ -1,20 +1,23 @@
+#See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
+
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-buster-slim AS base
 WORKDIR /app
-EXPOSE 80
-EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
-COPY ["src/customer/ThinkerThings.Service.CustomerManagement.Api/ThinkerThings.Service.CustomerManagement.Api.csproj", "src/customer/ThinkerThings.Service.CustomerManagement.Api/"]
-RUN dotnet restore "src/customer/ThinkerThings.Service.CustomerManagement.Api/ThinkerThings.Service.CustomerManagement.Api.csproj"
+COPY ["src/Services/ThinkerThings.Customers.Service.Api/ThinkerThings.Customers.Service.Api.csproj", "src/Services/ThinkerThings.Customers.Service.Api/"]
+COPY ["src/BuildingBlocks/ThinkerThings.BuildingBlocks.Cache/ThinkerThings.BuildingBlocks.Cache.csproj", "src/BuildingBlocks/ThinkerThings.BuildingBlocks.Cache/"]
+COPY ["src/BuildingBlocks/ThinkerThings.BuildingBlocks.Application/ThinkerThings.BuildingBlocks.Application.csproj", "src/BuildingBlocks/ThinkerThings.BuildingBlocks.Application/"]
+RUN dotnet restore "src/Services/ThinkerThings.Customers.Service.Api/ThinkerThings.Customers.Service.Api.csproj"
 COPY . .
-WORKDIR "/src/src/customer/ThinkerThings.Service.CustomerManagement.Api"
-RUN dotnet build "ThinkerThings.Service.CustomerManagement.Api.csproj" -c Release -o /app/build
+WORKDIR "/src/src/Services/ThinkerThings.Customers.Service.Api"
+RUN dotnet build "ThinkerThings.Customers.Service.Api.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "ThinkerThings.Service.CustomerManagement.Api.csproj" -c Release -o /app/publish
+RUN dotnet publish "ThinkerThings.Customers.Service.Api.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "ThinkerThings.Service.CustomerManagement.Api.dll"]
+EXPOSE 80
+ENTRYPOINT ["dotnet", "ThinkerThings.Customers.Service.Api.dll"]
