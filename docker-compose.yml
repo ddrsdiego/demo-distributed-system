@@ -1,0 +1,43 @@
+version: '3.4'
+
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    networks:
+      - thinkerthings
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  mariadb:
+    image: mariadb
+    networks:
+      - thinkerthings
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+
+  memcached:
+    image: memcached
+    networks:
+      - thinkerthings
+    ports:
+      - "11211:11211"
+
+  thinkerthings.services.customers.api:
+    image: thinkerthings/services-customers-api
+    build:
+      context: .
+      dockerfile: src/services/customers/ThinkerThings.Services.Customers.Api/Dockerfile
+    networks:
+      - thinkerthings
+    ports:
+      - "59304:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Compose
+      - ASPNETCORE_URLS=http://+:80
+
+networks:
+  thinkerthings:
+    driver: bridge
