@@ -4,6 +4,7 @@
     using Microsoft.AspNetCore.Mvc;
     using System.Net;
     using System.Threading.Tasks;
+    using ThinkerThings.BuildingBlocks.Cache.Memcached;
     using ThinkerThings.Services.Customers.Application.Commands;
     using ThinkerThings.Services.Customers.Application.Models;
     using ThinkerThings.Services.Customers.Application.Queries;
@@ -23,13 +24,16 @@
         }
 
         [HttpPost]
+        [ProducesResponseType(typeof(void), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(void), (int)HttpStatusCode.InternalServerError)]
+        [ProducesResponseType(typeof(CustomerResponse), (int)HttpStatusCode.Created)]
         public async Task<IActionResult> RegisterNewCustomer(RegisterNewCustomerCommand command)
         {
             var response = await _mediator.Send(command);
             if (response.IsFailure)
                 return BadRequest(response.ErrorResponse);
 
-            return Created("", new { response.PayLoad.Id, response.PayLoad.Name, response.PayLoad.CreatedAt });
+            return Created($"{Request.Scheme}://{Request.Host}/api/v{API_VERSION}/customers/{response.PayLoad.Id}", response.PayLoad);
         }
 
         [HttpPut]
@@ -44,16 +48,30 @@
         }
 
         [HttpGet]
+        [Route("{customerId}")]
         [ProducesResponseType(typeof(void), (int)HttpStatusCode.BadRequest)]
         [ProducesResponseType(typeof(void), (int)HttpStatusCode.InternalServerError)]
         [ProducesResponseType(typeof(CustomerResponse), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> GetCustomerById([FromQuery] string id)
+        public async Task<IActionResult> GetCustomerById(string customerId)
         {
-            var response = await _mediator.Send(new GetCustomerByIdQuery(id));
+            var response = await _mediator.Send(new GetCustomerByIdQuery(customerId));
             if (response.IsFailure)
                 return BadRequest(response.ErrorResponse);
 
-            return Created("", response.PayLoad);
+            return Ok(response.PayLoad);
+        }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(void), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(void), (int)HttpStatusCode.InternalServerError)]
+        [ProducesResponseType(typeof(CustomerResponse), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetCustomerByEmail([FromServices] ICacheProvider cacheProvider, [FromQuery] string email)
+        {
+            var response = await cacheProvider.Get<CustomerResponse>(email);
+            if (response.Equals(default))
+                return NotFound();
+
+            return Ok(response);
         }
     }
 }
