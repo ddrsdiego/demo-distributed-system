@@ -1,10 +1,10 @@
-﻿using MediatR;
-using System;
-using ThinkerThings.BuildingBlocks.Application;
-using ThinkerThings.Customers.Service.Domain.AggregateModels.CustomerAggregate;
-
-namespace ThinkerThings.Customers.Service.Application.Commands
+﻿namespace ThinkerThings.Customers.Service.Application.Commands
 {
+    using MediatR;
+    using System;
+    using ThinkerThings.BuildingBlocks.Application;
+    using ThinkerThings.Customers.Service.Domain.AggregateModels.CustomerAggregate;
+
     public class RegisterNewCustomerCommand : Request, IRequest<RegisterNewCustomerResponse>
     {
         public string Name { get; set; }
@@ -19,10 +19,9 @@ namespace ThinkerThings.Customers.Service.Application.Commands
     {
         public static Customer AdpaterCommandToEntity(this RegisterNewCustomerCommand command)
         {
-            return new Customer
+            return new Customer("", command.Email)
             {
                 Name = command.Name,
-                Email = command.Email,
                 Address = command.Address,
                 DateOfBirth = command.BirthDate,
             };

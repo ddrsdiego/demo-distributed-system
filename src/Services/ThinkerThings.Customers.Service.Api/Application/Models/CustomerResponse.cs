@@ -1,8 +1,8 @@
-﻿using System;
-using ThinkerThings.Service.Messages;
-
-namespace ThinkerThings.Customers.Service.Application.Responses
+﻿namespace ThinkerThings.Customers.Service.Application.Models
 {
+    using System;
+    using ThinkerThings.Service.Messages;
+
     public struct CustomerResponse : NewCustomerRegistered
     {
         public string Id { get; set; }

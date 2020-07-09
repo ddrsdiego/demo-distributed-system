@@ -1,16 +1,21 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
-using ThinkerThings.Customers.Service.Application.Commands;
-using ThinkerThings.Customers.Service.Application.Queries.GetCustomerById;
-
-namespace ThinkerThings.Customers.Service.Api.Controllers
+﻿namespace ThinkerThings.Customers.Service.Api.Controllers.v1
 {
+    using MediatR;
+    using Microsoft.AspNetCore.Mvc;
+    using System.Net;
+    using System.Threading.Tasks;
+    using ThinkerThings.Customers.Service.Application.Commands;
+    using ThinkerThings.Customers.Service.Application.Models;
+    using ThinkerThings.Customers.Service.Application.Queries.GetCustomerById;
+
     [ApiController]
-    [Route("customers")]
+    [ApiVersion(API_VERSION)]
+    [Produces("application/json")]
+    [Route("api/v{version:apiVersion}/customers")]
     public class CustomerController : Controller
     {
         private readonly IMediator _mediator;
+        private const string API_VERSION = "1";
 
         public CustomerController(IMediator mediator)
         {
@@ -39,6 +44,9 @@ namespace ThinkerThings.Customers.Service.Api.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(typeof(void), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(void), (int)HttpStatusCode.InternalServerError)]
+        [ProducesResponseType(typeof(CustomerResponse), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetCustomerById([FromQuery] string id)
         {
             var response = await _mediator.Send(new GetCustomerByIdQuery(id));

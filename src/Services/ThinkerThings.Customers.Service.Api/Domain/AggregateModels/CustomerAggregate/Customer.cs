@@ -1,19 +1,21 @@
-﻿using System;
-using ThinkerThings.Customers.Service.Domain.SeedWorks;
-
-namespace ThinkerThings.Customers.Service.Domain.AggregateModels.CustomerAggregate
+﻿namespace ThinkerThings.Customers.Service.Domain.AggregateModels.CustomerAggregate
 {
+    using System;
+    using ThinkerThings.Customers.Service.Domain.SeedWorks;
+
     public class Customer : Entity
     {
-        public Customer()
+        public Customer(string customerId, Email email)
         {
+            CustomerId = customerId;
+            Email = email;
             AddDomainEvent(new NewCustomerCreatedNotification(this));
         }
 
-        public string CustomerId { get; } = Guid.NewGuid().ToString("N");
+        public string CustomerId { get; }
         public string Name { get; set; }
         public string Address { get; set; }
-        public string Email { get; set; }
+        public Email Email { get; }
         public DateTime DateOfBirth { get; set; }
         public DateTime CreatedAt { get; } = DateTime.Now;
         public DateTime UpdatedAt { get; private set; }

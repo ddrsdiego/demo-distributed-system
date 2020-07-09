@@ -1,9 +1,9 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using ThinkerThings.BuildingBlocks.Cache.Memcached;
-
-namespace ThinkerThings.Customers.Service.IoC
+﻿namespace ThinkerThings.Customers.Service.IoC
 {
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using ThinkerThings.BuildingBlocks.Cache.Memcached;
+
     public static class CustomersServiceContainer
     {
         public static IServiceCollection AddCustomersServices(this IServiceCollection services, IConfiguration configuration)
@@ -13,6 +13,7 @@ namespace ThinkerThings.Customers.Service.IoC
             services.AddRespositories();
             services.AddOptions(configuration);
             services.AddMemcached(configuration);
+            services.AddSwagger();
 
             return services;
         }

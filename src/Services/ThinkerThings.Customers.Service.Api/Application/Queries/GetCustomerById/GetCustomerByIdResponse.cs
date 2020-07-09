@@ -1,5 +1,5 @@
 ﻿using ThinkerThings.BuildingBlocks.Application;
-using ThinkerThings.Customers.Service.Application.Responses;
+using ThinkerThings.Customers.Service.Application.Models;
 
 namespace ThinkerThings.Customers.Service.Application.Queries.GetCustomerById
 {

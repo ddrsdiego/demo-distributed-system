@@ -1,16 +1,16 @@
-﻿using MediatR;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
-using ThinkerThings.BuildingBlocks.Application;
-using ThinkerThings.BuildingBlocks.Cache.Memcached;
-using ThinkerThings.Customers.Service.Application.Commands;
-using ThinkerThings.Customers.Service.Application.Responses;
-using ThinkerThings.Customers.Service.Domain.AggregateModels.CustomerAggregate;
-
-namespace ThinkerThings.Customers.Service.Application.Queries.GetCustomerById
+﻿namespace ThinkerThings.Customers.Service.Application.Queries.GetCustomerById
 {
+    using MediatR;
+    using Microsoft.Extensions.Logging;
+    using System;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using ThinkerThings.BuildingBlocks.Application;
+    using ThinkerThings.BuildingBlocks.Cache.Memcached;
+    using ThinkerThings.Customers.Service.Application.Commands;
+    using ThinkerThings.Customers.Service.Application.Models;
+    using ThinkerThings.Customers.Service.Domain.AggregateModels.CustomerAggregate;
+
     public class GetCustomerByIdHandler : Handler, IRequestHandler<GetCustomerByIdQuery, GetCustomerByIdResponse>
     {
         private readonly ICacheProvider _cacheProvider;
@@ -50,7 +50,7 @@ namespace ThinkerThings.Customers.Service.Application.Queries.GetCustomerById
             catch (Exception ex)
             {
                 response.AddError(Erros.RegisterNewCustomerErrors.CustomerAlreadyRegistered());
-                return default(CustomerResponse);
+                return default;
             }
         }
     }

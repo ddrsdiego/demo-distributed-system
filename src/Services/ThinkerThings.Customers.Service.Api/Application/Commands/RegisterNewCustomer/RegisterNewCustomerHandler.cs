@@ -1,17 +1,20 @@
-﻿using MediatR;
-using Microsoft.Extensions.Logging;
-using System.Threading;
-using System.Threading.Tasks;
-using ThinkerThings.BuildingBlocks.Application;
-using ThinkerThings.BuildingBlocks.Cache.Memcached;
-using ThinkerThings.Customers.Service.Application.Responses;
-using ThinkerThings.Customers.Service.Domain.AggregateModels.CustomerAggregate;
-using ThinkerThings.Customers.Service.Infra.Extensions;
-
-namespace ThinkerThings.Customers.Service.Application.Commands
+﻿namespace ThinkerThings.Customers.Service.Application.Commands
 {
+    using MediatR;
+    using Microsoft.Extensions.Logging;
+    using System;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using ThinkerThings.BuildingBlocks.Application;
+    using ThinkerThings.BuildingBlocks.Cache.Memcached;
+    using ThinkerThings.Customers.Service.Application.Models;
+    using ThinkerThings.Customers.Service.Domain.AggregateModels.CustomerAggregate;
+    using ThinkerThings.Customers.Service.Domain.SeedWorks;
+    using ThinkerThings.Customers.Service.Infra.Extensions;
+
     public class RegisterNewCustomerHandler : CommandHandler, IRequestHandler<RegisterNewCustomerCommand, RegisterNewCustomerResponse>
     {
+        private Customer Customer;
         private readonly ICacheRepository _cacheRepository;
         private readonly ICustomerRepository _customerRepository;
 
@@ -33,14 +36,19 @@ namespace ThinkerThings.Customers.Service.Application.Commands
             if (response.IsFailure)
                 return response;
 
-            var newCustomer = request.AdpaterCommandToEntity();
+            var email = Email.Create(request.Email);
+            if (email.IsFailure)
+            {
+            }
 
-            await _customerRepository.Register(newCustomer);
+            Customer = new Customer(Guid.NewGuid().ToString("N"), email.Value);
 
-            response.SetPayLoad(newCustomer.AdapterEntityToResponse());
+            await _customerRepository.Register(Customer);
 
-            await _cacheRepository.Set(newCustomer.CustomerId, response.PayLoad);
-            await Mediator.DispatchDomainEvents(newCustomer);
+            response.SetPayLoad(Customer.AdapterEntityToResponse());
+
+            await _cacheRepository.Set(Customer.CustomerId, response.PayLoad);
+            await Mediator.DispatchDomainEvents(Customer);
 
             return response;
         }
@@ -68,7 +76,7 @@ namespace ThinkerThings.Customers.Service.Application.Commands
                 Address = customer.Address,
                 DateOfBirth = customer.DateOfBirth,
                 CreatedAt = customer.CreatedAt,
-                Email = customer.Email,
+                Email = customer.Email.Value,
                 IsEnable = customer.IsEnable,
                 Name = customer.Name,
                 UpadatedAt = customer.UpdatedAt,
