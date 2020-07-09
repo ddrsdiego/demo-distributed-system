@@ -34,6 +34,8 @@ namespace ThinkerThings.Customers.Service.Domain.AggregateModels.CustomerAggrega
 
         public Result Disable()
         {
+            ClearDomainEvents();
+
             if (!IsEnable)
                 return Result.Fail($"Cliente {CustomerId} já esta no status desabilitado.");
 
