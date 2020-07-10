@@ -15,6 +15,8 @@ services:
       - thinkerthings
     ports:
       - "3306:3306"
+    volumes:
+      - /data/maridb:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: admin
 
