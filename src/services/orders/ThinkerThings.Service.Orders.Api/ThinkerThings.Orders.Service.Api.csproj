@@ -4,7 +4,7 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UserSecretsId>343337b8-71f4-4783-824f-5de776c26ef7</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-    <DockerfileContext>..\..\..</DockerfileContext>
+    <DockerfileContext>..\..\..\..</DockerfileContext>
     <AssemblyName>ThinkerThings.Orders.Service.Api</AssemblyName>
     <RootNamespace>ThinkerThings.Orders.Service.Api</RootNamespace>
   </PropertyGroup>

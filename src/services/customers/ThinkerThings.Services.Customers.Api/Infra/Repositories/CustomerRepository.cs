@@ -69,7 +69,7 @@
             }
         }
 
-        public async Task Disable(Customer newCustomer)
+        public async Task Disable(Customer customer)
         {
             try
             {
@@ -77,13 +77,14 @@
                 await conn.ExecuteAsync(CustomerRepositoryStatements.Disable,
                     new
                     {
-                        newCustomer.CustomerId,
-                        newCustomer.IsEnable,
-                        UpdatedAt = newCustomer.UpdatedAt.ConvertDateTimeToMySqlString()
+                        customer.CustomerId,
+                        customer.IsEnable,
+                        UpdatedAt = customer.UpdatedAt.ConvertDateTimeToMySqlString()
                     });
             }
             catch (Exception ex)
             {
+                Logger.LogError(ex, $"Falha ao inativar o cliente {customer.Email}.");
                 throw;
             }
         }

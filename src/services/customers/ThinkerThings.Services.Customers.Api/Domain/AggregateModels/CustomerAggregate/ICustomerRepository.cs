@@ -1,10 +1,10 @@
-﻿using System.Threading.Tasks;
-
-namespace ThinkerThings.Services.Customers.Domain.AggregateModels.CustomerAggregate
+﻿namespace ThinkerThings.Services.Customers.Domain.AggregateModels.CustomerAggregate
 {
+    using System.Threading.Tasks;
+
     public interface ICustomerRepository
     {
-        Task Disable(Customer newCustomer);
+        Task Disable(Customer customer);
 
         Task Register(Customer newCustomer);
 

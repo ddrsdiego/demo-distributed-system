@@ -16,7 +16,7 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - /data/maridb:/var/lib/mysql
+      - /data/mariadb:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: admin
 
@@ -36,6 +36,19 @@ services:
       - thinkerthings
     ports:
       - "59304:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Compose
+      - ASPNETCORE_URLS=http://+:80
+
+  thinkerthings.services.orders.api:
+    image: thinkerthings/services-orders-api
+    build:
+      context: .
+      dockerfile: src/services/orders/ThinkerThings.Service.Orders.Api/Dockerfile
+    networks:
+      - thinkerthings
+    ports:
+      - "65270:80"
     environment:
       - ASPNETCORE_ENVIRONMENT=Compose
       - ASPNETCORE_URLS=http://+:80

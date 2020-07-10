@@ -34,5 +34,7 @@
 
             return emailResult.Value;
         }
+
+        public override string ToString() => Value;
     }
 }
