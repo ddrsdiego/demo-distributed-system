@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using ThinkerThings.Services.Orders.Domain.AggregateModels.CustomerAggregate;
-
-namespace ThinkerThings.Services.Orders.Domain.AggregateModels.OrderAggregate
+﻿namespace ThinkerThings.Services.Orders.Domain.AggregateModels.OrderAggregate
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using ThinkerThings.Services.Orders.Domain.AggregateModels.CustomerAggregate;
+
     public class Order
     {
-        private readonly List<OrderItem> _orderItems;
+        private readonly List<OrderItem> _orderItems = new List<OrderItem>();
 
         public Order(Customer customer)
         {
@@ -22,12 +22,10 @@ namespace ThinkerThings.Services.Orders.Domain.AggregateModels.OrderAggregate
         public void AddOrdemItem(int productId, decimal amount)
         {
             var orderItem = new OrderItem(productId, amount);
-
             var productAlreadyRegistered = _orderItems.SingleOrDefault(x => x.ProductId.Equals(orderItem.ProductId));
+
             if (productAlreadyRegistered != null)
-            {
                 return;
-            }
 
             _orderItems.Add(orderItem);
         }

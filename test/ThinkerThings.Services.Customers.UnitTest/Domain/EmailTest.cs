@@ -9,6 +9,7 @@
     {
         [TestCase("hseyh256z@lifemail.tech", "hseyh256z@lifemail.tech", true)]
         [TestCase("usuario@outlook.com", "usuario@outlook.com", true)]
+        [TestCase("usuario@outlook.com", "hseyh256z@lifemail.tech", false)]
         public void Test1(string electronicMail, string expectedValue, bool expectedResult)
         {
             var email = Email.Create(electronicMail);
